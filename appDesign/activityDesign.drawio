@@ -1,0 +1,22 @@
+<mxfile host="app.diagrams.net" modified="2024-07-19T07:25:50.188Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36" etag="8gRtO-XYMDpxOX1BMjTx" version="24.7.1" type="device">
+  <diagram name="Pagină-1" id="e3TAEm-btMj8c2uIH9YA">
+    <mxGraphModel dx="2927" dy="1044" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="pdFL4RSGOMo0T5e-siJF-1" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-790" y="120" width="411" height="891" as="geometry" />
+        </mxCell>
+        <mxCell id="pdFL4RSGOMo0T5e-siJF-2" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-20" y="120" width="411" height="891" as="geometry" />
+        </mxCell>
+        <mxCell id="pdFL4RSGOMo0T5e-siJF-3" value="MainActivity" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=30;" vertex="1" parent="1">
+          <mxGeometry x="-790" y="70" width="180" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="pdFL4RSGOMo0T5e-siJF-4" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-720" y="270" width="130" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
