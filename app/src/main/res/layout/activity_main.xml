@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+<!--    TODO(Change text size to 17sp)-->
+
     <Button
         android:id="@+id/encBtn"
         android:layout_width="wrap_content"
@@ -16,19 +18,19 @@
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.459" />
+        app:layout_constraintVertical_bias="0.461" />
 
     <Button
         android:id="@+id/decBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="#007fff"
-        android:textColor="@color/black"
         android:onClick="onDecBtnClick"
         android:text="Decapsulate message"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -41,22 +43,39 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hide your message in a photo"
+        android:textSize="17sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/encBtn"
-        app:layout_constraintVertical_bias="0.031" />
+        app:layout_constraintVertical_bias="0.028" />
 
     <TextView
         android:id="@+id/textViewDec"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Reveal the message hidden in a photo "
+        android:text="Reveal the message hidden in a photo"
+        android:textSize="17sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/decBtn"
         app:layout_constraintVertical_bias="0.061" />
+
+    <ImageButton
+        android:id="@+id/moreInfoBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#007fff"
+        android:contentDescription="@string/app_name"
+        android:onClick="onClickMoreInfo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.954"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDec"
+        app:layout_constraintVertical_bias="0.894"
+        app:srcCompat="@android:drawable/ic_menu_help"
+        app:tint="#000000" />
 </androidx.constraintlayout.widget.ConstraintLayout>

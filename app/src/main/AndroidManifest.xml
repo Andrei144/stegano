@@ -24,6 +24,8 @@
 
         <activity android:name=".EncapsulateActivity" />
         <activity android:name=".DecapsulateActivity" />
+        <activity android:name=".InfoActivity" />
+        <activity android:name=".EncryptActivity" />
     </application>
 
 </manifest>

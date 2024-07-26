@@ -28,6 +28,16 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    fun onClickMoreInfo(view: View) {
+        Intent(applicationContext, InfoActivity::class.java).also {
+            startActivity(it)
+        }
+    }
+
+    fun onClickGoBack(view: View) {
+        finish()
+    }
+
     /**
      * A native method that is implemented by the 'stegano' native library,
      * which is packaged with this application.
