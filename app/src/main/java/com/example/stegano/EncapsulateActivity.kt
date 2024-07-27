@@ -24,6 +24,7 @@ class EncapsulateActivity: AppCompatActivity() {
     private var imageURI : Uri? = null
     private lateinit var photoUri: Uri
 
+
     private lateinit var messageInput: TextInputEditText
     private lateinit var encryptionPassword: EditText
     private lateinit var imageView: ImageView
@@ -31,7 +32,7 @@ class EncapsulateActivity: AppCompatActivity() {
 
     private lateinit var message: String
     private lateinit var password: String
-    private lateinit var image: Bitmap
+    private var imageChosen = false
 
      private val getGalleryPhoto = registerForActivityResult(ActivityResultContracts.GetContent()) {
         uri: Uri? ->
@@ -40,18 +41,14 @@ class EncapsulateActivity: AppCompatActivity() {
             imageURI = uri
             imageView.setImageURI(imageURI)
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                val source = ImageDecoder.createSource(contentResolver, uri)
-                image = ImageDecoder.decodeBitmap(source)
-            } else {
-                // Use BitmapFactory for older versions
-                image = MediaStore.Images.Media.getBitmap(contentResolver, uri)
-            }
+            imageChosen = true
         }
     }
 
     private val getCameraPhoto = registerForActivityResult(ActivityResultContracts.TakePicture()){
         imageView.setImageURI(photoUri)
+        imageURI = photoUri
+        imageChosen = true
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,7 +56,9 @@ class EncapsulateActivity: AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_encapsulate)
 
+        imageURI = null
         photoUri = getImageURI()
+        imageChosen = false
 
         messageInput = findViewById(R.id.messageInput)
         encryptionPassword = findViewById(R.id.encryptionPassword)
@@ -73,7 +72,7 @@ class EncapsulateActivity: AppCompatActivity() {
 
     private fun inputProvided(): Boolean {
         this.takeInputData()
-        return this.message.isNotEmpty() && this.password.isNotEmpty()
+        return this.message.isNotEmpty() && this.password.isNotEmpty() && imageChosen
     }
 
     private fun getImageURI():Uri{
@@ -90,27 +89,26 @@ class EncapsulateActivity: AppCompatActivity() {
 
     fun onClickTakePhoto(view: View) {
         Log.d("DEV", "Take photo button clicked")
-//        TODO("Take photo")
 
         getCameraPhoto.launch(photoUri)
     }
 
     fun onClickEncapsulate(view: View) {
+        Log.d("DEV", "Encapsulate button clicked")
+
         if(this.inputProvided()){
             Log.d("DEV", "Message: $message \t\tPassword: $password")
 
             Intent(this, EncryptActivity::class.java).also {
                 it.putExtra("password", password)
                 it.putExtra("message", message)
+                it.putExtra("imageURI", imageURI.toString())
 
                 startActivity(it)
             }
         }else{
             Log.d("DEV", "Input not provided")
         }
-
-        Log.d("DEV", "Encapsulate button clicked")
-//        TODO("Encapsulate message")
     }
 
     fun onClickGoBack(view: View) {
