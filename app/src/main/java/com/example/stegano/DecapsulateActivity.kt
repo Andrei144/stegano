@@ -15,5 +15,8 @@ class DecapsulateActivity: AppCompatActivity() {
 
     fun onClickUploadToDecap(view: View) {}
     fun onClickDecapMessage(view: View) {}
+    fun onClickGoBack(view: View) {
+        finish()
+    }
 
 }

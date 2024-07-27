@@ -2,6 +2,7 @@ package com.example.stegano
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.view.View
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -21,5 +22,9 @@ class InfoActivity : AppCompatActivity() {
         infoTextView = findViewById(R.id.infoTextView1)
         infoTextView.text = infoText
 
+    }
+
+    fun onClickGoBack(view: View) {
+        finish()
     }
 }

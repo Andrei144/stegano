@@ -25,26 +25,29 @@
             android:textAlignment="center"
             android:textSize="20sp" />
 
-        <CheckBox
-            android:id="@+id/checkBoxNoEcnryption"
+        <RadioGroup
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Identical (the message is not encrypted)"
-            android:textSize="18sp" />
+            android:layout_height="match_parent" >
 
-        <CheckBox
-            android:id="@+id/checkBoxRsaEncryption"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="AES (default)"
-            android:textSize="18sp" />
+            <RadioButton
+                android:id="@+id/noEncryptionBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=" No encryption (not recomended)" />
 
-        <CheckBox
-            android:id="@+id/checkBox4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="RSA (small messages only)"
-            android:textSize="18sp" />
+            <RadioButton
+                android:id="@+id/AESBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="AES (default)" />
+
+            <RadioButton
+                android:id="@+id/RSABtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="RSA (small message only)" />
+        </RadioGroup>
+
     </LinearLayout>
 
     <Button
@@ -127,5 +130,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout"
         app:layout_constraintVertical_bias="1.0" />
+
+    <ImageButton
+        android:id="@+id/imageButton3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/app_name"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.954"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.916"
+        app:srcCompat="@android:drawable/ic_menu_revert" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
