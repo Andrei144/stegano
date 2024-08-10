@@ -24,7 +24,6 @@ class EncapsulateActivity: AppCompatActivity() {
     private var imageURI : Uri? = null
     private lateinit var photoUri: Uri
 
-
     private lateinit var messageInput: TextInputEditText
     private lateinit var encryptionPassword: EditText
     private lateinit var imageView: ImageView

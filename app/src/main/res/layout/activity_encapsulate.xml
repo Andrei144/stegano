@@ -80,7 +80,7 @@
         android:layout_width="177dp"
         android:layout_height="52dp"
         android:ems="10"
-        android:hint="Encryption password"
+        android:hint="Password"
         android:importantForAutofill="no"
         android:inputType="textPassword"
         app:layout_constraintBottom_toBottomOf="parent"

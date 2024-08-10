@@ -163,9 +163,6 @@ class EncodeModel: CryptoManagerAES() {
                 "\nCode: ${code.decodeToString()}" +
                 "\nPackage data: ${packageData.decodeToString()}")
 
-//        Log.d("DEV", "Package data: ${packageData.decodeToString()}\nByte size: ${packageData.size}=${code.size}+${Int.SIZE_BYTES}")
-//        Size: 36=35+
-
         return steganoLSB(packageData, coverImage)
     }
 

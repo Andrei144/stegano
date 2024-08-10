@@ -1,16 +1,25 @@
 package com.example.stegano
 
+import android.annotation.SuppressLint
+import android.content.ContentValues
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
-import android.widget.RadioGroup
+import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import java.io.File
+import java.io.FileOutputStream
+import java.io.OutputStream
 
 class EncryptActivity : AppCompatActivity() {
 
@@ -21,16 +30,26 @@ class EncryptActivity : AppCompatActivity() {
     private var image: Bitmap? = null
     private var coverImage: Bitmap? = null
 
-//    private var managerAES = CryptoManagerAES()
     private var managerStegano: EncodeModel? = null
 
+    private lateinit var displayImageTextView: TextView
+    private lateinit var coverImageView : ImageView
+    private var textImageResultOriginal: String = "Cover image before steganography"
+    private var textImageResultSteganographed: String = "Cover image after steganography"
+
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_encrypt)
 
+        displayImageTextView = findViewById(R.id.textViewImageResult)
+        displayImageTextView.text = textImageResultOriginal
+        coverImageView = findViewById(R.id.coverImageView)
+
         if(this.getData()){
             Log.d("DEV", "Data received successfully")
+            coverImageView.setImageBitmap(image)
         }else{
             Log.d("DEV", "Data not received")
             this.finish()
@@ -61,6 +80,7 @@ class EncryptActivity : AppCompatActivity() {
                                 )
         } else {
             // Use BitmapFactory for older versions
+            @Suppress("DEPRECATION")
             img = MediaStore.Images.Media.getBitmap(contentResolver, uri)
         }
         return img
@@ -81,65 +101,77 @@ class EncryptActivity : AppCompatActivity() {
 
         return this.checkData()
     }
+    private fun refreshImage(){
+        displayImageTextView.text = textImageResultSteganographed
+        coverImageView.setImageBitmap(coverImage)
+        Toast.makeText(this, "Image was steganographed", Toast.LENGTH_LONG).show()
+    }
+    private fun saveImage(bitmap: Bitmap, context: Context, folderName: String) {
+        val filename = "${System.currentTimeMillis()}.png"
+        var fos: OutputStream? = null
 
-//    Radio group logic
-    private fun getEncryptionAlgorithm(): String {
-        val radioGroup = findViewById<RadioGroup>(R.id.encryptionRadioGroup)
-        val selectedAlgorithm = radioGroup.checkedRadioButtonId
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            val resolver = context.contentResolver
+            val contentValues = ContentValues().apply {
+                put(MediaStore.MediaColumns.DISPLAY_NAME, filename)
+                put(MediaStore.MediaColumns.MIME_TYPE, "image/png")
+                put(MediaStore.MediaColumns.RELATIVE_PATH, "Pictures/$folderName")
+            }
 
-        when (selectedAlgorithm) {
-            R.id.identical -> return "identical"
-            R.id.AES -> return "AES"
-//            R.id.RSA -> return "RSA"
+            val imageUri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+            fos = imageUri?.let { resolver.openOutputStream(it) }
+        } else {
+            val imagesDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString() + File.separator + folderName
+            val file = File(imagesDir)
+            if (!file.exists()) {
+                file.mkdirs()
+            }
+            val image = File(imagesDir, filename)
+            fos = FileOutputStream(image)
         }
 
-        return "AES" // Default value if no radio button is selected
+        fos?.use {
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, it)
+        }
     }
 
 //    On click listeners for the buttons
-    fun onClickEncrypt(view: View) {
+    fun onClickEncode(view: View) {
         val messageBytes = message.encodeToByteArray()
         val passwordBytes = password.encodeToByteArray()
 
         managerStegano = EncodeModel()
-//        var encryptedBytes: ByteArray
-//
-//        try {
-//            encryptedBytes = managerAES.encrypt(bytes)
-//        }catch (e: Exception){
-//            managerAES = CryptoManagerAES()
-//            encryptedBytes = managerAES.encrypt(bytes)
-//        }
-//
-//        val encryptedMessage = encryptedBytes.decodeToString()
-//        Log.d("DEV", "Encrypted message: $encryptedMessage\n\t$encryptedBytes")
-//
-//        val decryptedBytes = managerAES.decrypt(encryptedBytes)
-//        val decryptedMessage = decryptedBytes.decodeToString()
-//        Log.d("DEV", "Decrypted message: $decryptedMessage")
 
         coverImage = managerStegano?.encapsulate(messageBytes, passwordBytes, image!!)
+        refreshImage()
 
-        try {
-            val hiddenBytes = managerStegano?.decapsulate(coverImage!!, passwordBytes)
-            val hiddenMessage = hiddenBytes?.decodeToString()
-            Log.d("DEV", "Hidden message: $hiddenMessage")
-        }catch (e: Exception){
-            if(e.message == "Incorrect password"){
-                Log.d("DEV", "Password is not correct")
-            }else{
-                Log.d("DEV", e.message.toString())
-            }
-        }
-
-
-//        TODO("Implement the encryption algorithms")
+//        try {
+//            val hiddenBytes = managerStegano?.decapsulate(coverImage!!, passwordBytes)
+//            val hiddenMessage = hiddenBytes?.decodeToString()
+//            Log.d("DEV", "Hidden message: $hiddenMessage")
+//        }catch (e: Exception){
+//            if(e.message == "Incorrect password"){
+//                Log.d("DEV", "Password is not correct")
+//            }else{
+//                Log.d("DEV", e.message.toString())
+//            }
+//        }
     }
     fun onClickSendMail(view: View) {
 //        TODO("Implement the sending of the message via mail")
     }
     fun onClickSaveImageBtn(view: View) {
-//        TODO("Implement the saving of the steganographed image")
+        val folderName = "Stegano"
+
+        if(coverImage == null){
+            Toast.makeText(this, "Image is not steganographed", Toast.LENGTH_LONG).show()
+            return
+        }else {
+            saveImage(coverImage!!, this, folderName)
+        }
+
+        Toast.makeText(this, "Image was saved", Toast.LENGTH_LONG).show()
+
     }
     fun onClickGoBack(view: View) {
         Log.d("DEV", "Go back button clicked")
