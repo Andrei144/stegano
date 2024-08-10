@@ -26,23 +26,25 @@
             android:textSize="20sp" />
 
         <RadioGroup
+            android:id="@+id/encryptionRadioGroup"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <RadioButton
-                android:id="@+id/noEncryptionBtn"
+                android:id="@+id/identical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text=" No encryption (not recomended)" />
+                android:text="No encryption (not recomended)" />
 
             <RadioButton
-                android:id="@+id/AESBtn"
+                android:id="@+id/AES"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:checked="true"
                 android:text="AES (default)" />
 
             <RadioButton
-                android:id="@+id/RSABtn"
+                android:id="@+id/RSA"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="RSA (small message only)" />
