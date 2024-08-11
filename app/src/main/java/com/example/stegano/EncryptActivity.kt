@@ -160,6 +160,7 @@ class EncryptActivity : AppCompatActivity() {
     fun onClickSendMail(view: View) {
 //        TODO("Implement the sending of the message via mail")
     }
+
     fun onClickSaveImageBtn(view: View) {
         val folderName = "Stegano"
 
@@ -171,8 +172,8 @@ class EncryptActivity : AppCompatActivity() {
         }
 
         Toast.makeText(this, "Image was saved", Toast.LENGTH_LONG).show()
-
     }
+
     fun onClickGoBack(view: View) {
         Log.d("DEV", "Go back button clicked")
         finish()

@@ -12,6 +12,7 @@ import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -81,20 +82,14 @@ class EncapsulateActivity: AppCompatActivity() {
     }
 
     fun onClickUploadPhoto(view: View) {
-        Log.d("DEV", "Upload photo button clicked")
-
         getGalleryPhoto.launch("image/*")
     }
 
     fun onClickTakePhoto(view: View) {
-        Log.d("DEV", "Take photo button clicked")
-
         getCameraPhoto.launch(photoUri)
     }
 
     fun onClickEncapsulate(view: View) {
-        Log.d("DEV", "Encapsulate button clicked")
-
         if(this.inputProvided()){
             Log.d("DEV", "Message: $message \t\tPassword: $password")
 
@@ -106,7 +101,8 @@ class EncapsulateActivity: AppCompatActivity() {
                 startActivity(it)
             }
         }else{
-            Log.d("DEV", "Input not provided")
+            Toast.makeText(this, "Please provide all the data required",
+                Toast.LENGTH_LONG).show()
         }
     }
 

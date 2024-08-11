@@ -159,9 +159,9 @@ class EncodeModel: CryptoManagerAES() {
 
         packageData += code
 
-        Log.d("DEV", "Password: ${pass.decodeToString()}\tEncrypted message: ${encryptedMessage.decodeToString()}" +
-                "\nCode: ${code.decodeToString()}" +
-                "\nPackage data: ${packageData.decodeToString()}")
+//        Log.d("DEV", "Password: ${pass.decodeToString()}\tEncrypted message: ${encryptedMessage.decodeToString()}" +
+//                "\nCode: ${code.decodeToString()}" +
+//                "\nPackage data: ${packageData.decodeToString()}")
 
         return steganoLSB(packageData, coverImage)
     }
@@ -185,16 +185,19 @@ class EncodeModel: CryptoManagerAES() {
         val code = packageData.sliceArray(1..<packageData.size)
 
         if(code.size != codeSize){
-            Log.w("Size mismatch", "Message could be altered or corrupted")
+            Log.w("Size mismatch", "Code size: ${code.size}\t" +
+                    "Code size expected: $codeSize\n" +
+                    "Is also a very small possibility that the image is not steganographed.")
+//            throw Exception("Size mismatch, or image is not steganographed")
         }
 
         val passwordSize = code[0].toInt()
         val pass = code.sliceArray(1..passwordSize)
         val encryptedMessage = code.sliceArray(passwordSize + 1..<code.size)
 
-        Log.d("DEV", "Password: ${pass.decodeToString()}\tEncrypted message: ${encryptedMessage.decodeToString()}" +
-                "\nCode: ${code.decodeToString()}" +
-                "\nPackage data: ${packageData.decodeToString()}")
+//        Log.d("DEV", "Password: ${pass.decodeToString()}\tEncrypted message: ${encryptedMessage.decodeToString()}" +
+//                "\nCode: ${code.decodeToString()}" +
+//                "\nPackage data: ${packageData.decodeToString()}")
 
         if(!pass.contentEquals(password)){
             throw Exception("Incorrect password")
