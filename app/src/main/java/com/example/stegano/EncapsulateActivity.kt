@@ -1,14 +1,8 @@
 package com.example.stegano
 
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.ImageDecoder
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.provider.MediaStore
-//import android.provider.MediaStore
-import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
@@ -91,7 +85,6 @@ class EncapsulateActivity: AppCompatActivity() {
 
     fun onClickEncapsulate(view: View) {
         if(this.inputProvided()){
-            Log.d("DEV", "Message: $message \t\tPassword: $password")
 
             Intent(this, EncryptActivity::class.java).also {
                 it.putExtra("password", password)

@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
-import android.media.Image
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -50,10 +49,9 @@ class EncryptActivity : AppCompatActivity() {
         coverImageView = findViewById(R.id.coverImageView)
 
         if(this.getData()){
-            Log.d("DEV", "Data received successfully")
             coverImageView.setImageBitmap(image)
         }else{
-            Log.d("DEV", "Data not received")
+            Log.w("IntentExtra", "Data not received")
             this.finish()
         }
     }
@@ -96,8 +94,6 @@ class EncryptActivity : AppCompatActivity() {
         password = getStringExtra("password")
         message = getStringExtra("message")
         imageUri = getUriExtra("imageURI")
-
-        Log.d("DEV", "Password: $password\tMessage: $message\tImageURI: $imageUri")
 
         image = imageFromImageURI(imageUri)
 
@@ -168,7 +164,6 @@ class EncryptActivity : AppCompatActivity() {
             Toast.makeText(this, "Image is not steganographed", Toast.LENGTH_LONG).show()
             return
         }else {
-            Log.d("DEV", "Sending mail")
             composeEmail("andrei.moanta@gmail.com",
                 "Stegano",
                 "Uite ce poza frumoasa!",
@@ -191,7 +186,6 @@ class EncryptActivity : AppCompatActivity() {
     }
 
     fun onClickGoBack(view: View) {
-        Log.d("DEV", "Go back button clicked")
         finish()
     }
 }

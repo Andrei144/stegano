@@ -3,9 +3,7 @@ package com.example.stegano
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-//import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 
 class MainActivity : AppCompatActivity() {
@@ -38,17 +36,4 @@ class MainActivity : AppCompatActivity() {
     fun onClickGoBack(view: View) {
         finish()
     }
-
-    /**
-     * A native method that is implemented by the 'stegano' native library,
-     * which is packaged with this application.
-     */
-//    external fun stringFromJNI(): String
-//
-//    companion object {
-//        // Used to load the 'stegano' library on application startup.
-//        init {
-//            System.loadLibrary("stegano")
-//        }
-//    }
 }

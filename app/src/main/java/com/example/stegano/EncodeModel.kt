@@ -33,11 +33,6 @@ class EncodeModel: CryptoManagerAES() {
 
         val dataFrame = PACKAGE_BORDER + packageData + PACKAGE_BORDER
 
-//        Log.d("DEV", "Package data: ${dataFrame.decodeToString()}\n" +
-//                "\t\t\t${dataFrame.sliceArray(2..dataFrame.size-3).decodeToString()}\n" +
-//                "Byte size: ${dataFrame.size}" +
-//                "\nBitsize: ${dataFrame.size}*${8}=${dataFrame.size * Byte.SIZE_BITS}")
-
         val minimalSizeRequired = dataFrame.size
         val totalNoOfBits = minimalSizeRequired * BYTE_SIZE
 
@@ -159,10 +154,6 @@ class EncodeModel: CryptoManagerAES() {
 
         packageData += code
 
-//        Log.d("DEV", "Password: ${pass.decodeToString()}\tEncrypted message: ${encryptedMessage.decodeToString()}" +
-//                "\nCode: ${code.decodeToString()}" +
-//                "\nPackage data: ${packageData.decodeToString()}")
-
         return steganoLSB(packageData, coverImage)
     }
 
@@ -194,10 +185,6 @@ class EncodeModel: CryptoManagerAES() {
         val passwordSize = code[0].toInt()
         val pass = code.sliceArray(1..passwordSize)
         val encryptedMessage = code.sliceArray(passwordSize + 1..<code.size)
-
-//        Log.d("DEV", "Password: ${pass.decodeToString()}\tEncrypted message: ${encryptedMessage.decodeToString()}" +
-//                "\nCode: ${code.decodeToString()}" +
-//                "\nPackage data: ${packageData.decodeToString()}")
 
         if(!pass.contentEquals(password)){
             throw Exception("Incorrect password")

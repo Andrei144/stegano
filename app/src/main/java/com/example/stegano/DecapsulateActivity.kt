@@ -101,13 +101,12 @@ class DecapsulateActivity: AppCompatActivity() {
 
             messageView.text = hiddenMessage
 
-            Log.d("DEV", "Hidden message: $hiddenMessage")
         }catch (e: Exception){
             if(e.message == "Incorrect password"){
                 Toast.makeText(this, "Incorrect password", Toast.LENGTH_LONG).show()
             }else{
                 Toast.makeText(this, e.message.toString(), Toast.LENGTH_LONG).show()
-                Log.d("DEV", e.message.toString())
+                Log.e("Exception", e.message.toString())
             }
         }
     }
