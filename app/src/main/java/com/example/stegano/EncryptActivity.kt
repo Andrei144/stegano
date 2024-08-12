@@ -3,8 +3,10 @@ package com.example.stegano
 import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
+import android.media.Image
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -106,9 +108,10 @@ class EncryptActivity : AppCompatActivity() {
         coverImageView.setImageBitmap(coverImage)
         Toast.makeText(this, "Image was steganographed", Toast.LENGTH_LONG).show()
     }
-    private fun saveImage(bitmap: Bitmap, context: Context, folderName: String) {
+    private fun saveImage(bitmap: Bitmap, context: Context, folderName: String): Uri {
         val filename = "${System.currentTimeMillis()}.png"
         var fos: OutputStream? = null
+        lateinit var imageUri: Uri
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             val resolver = context.contentResolver
@@ -118,10 +121,11 @@ class EncryptActivity : AppCompatActivity() {
                 put(MediaStore.MediaColumns.RELATIVE_PATH, "Pictures/$folderName")
             }
 
-            val imageUri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
-            fos = imageUri?.let { resolver.openOutputStream(it) }
+            imageUri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)?: return Uri.EMPTY
+            fos = imageUri.let { resolver.openOutputStream(it) }
         } else {
-            val imagesDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString() + File.separator + folderName
+            val imagesDir = Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_PICTURES).toString() + File.separator + folderName
             val file = File(imagesDir)
             if (!file.exists()) {
                 file.mkdirs()
@@ -133,6 +137,20 @@ class EncryptActivity : AppCompatActivity() {
         fos?.use {
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, it)
         }
+
+        return imageUri
+    }
+    @SuppressLint("QueryPermissionsNeeded")
+    private fun composeEmail(address: String, subject: String, message: String, imageUri: Uri) {
+        val intent = Intent(Intent.ACTION_SENDTO)
+        intent.setData(Uri.parse("mailto:")) // only email apps should handle this
+
+        intent.putExtra(Intent.EXTRA_EMAIL, address)
+        intent.putExtra(Intent.EXTRA_SUBJECT, subject)
+        intent.putExtra(Intent.EXTRA_TEXT, message)
+        intent.putExtra(Intent.EXTRA_STREAM, imageUri)
+
+        startActivity(intent)
     }
 
 //    On click listeners for the buttons
@@ -144,21 +162,19 @@ class EncryptActivity : AppCompatActivity() {
 
         coverImage = managerStegano?.encapsulate(messageBytes, passwordBytes, image!!)
         refreshImage()
-
-//        try {
-//            val hiddenBytes = managerStegano?.decapsulate(coverImage!!, passwordBytes)
-//            val hiddenMessage = hiddenBytes?.decodeToString()
-//            Log.d("DEV", "Hidden message: $hiddenMessage")
-//        }catch (e: Exception){
-//            if(e.message == "Incorrect password"){
-//                Log.d("DEV", "Password is not correct")
-//            }else{
-//                Log.d("DEV", e.message.toString())
-//            }
-//        }
     }
     fun onClickSendMail(view: View) {
-//        TODO("Implement the sending of the message via mail")
+        if(coverImage == null){
+            Toast.makeText(this, "Image is not steganographed", Toast.LENGTH_LONG).show()
+            return
+        }else {
+            Log.d("DEV", "Sending mail")
+            composeEmail("andrei.moanta@gmail.com",
+                "Stegano",
+                "Uite ce poza frumoasa!",
+                        saveImage(coverImage!!, this, "Stegano")
+                )
+        }
     }
 
     fun onClickSaveImageBtn(view: View) {

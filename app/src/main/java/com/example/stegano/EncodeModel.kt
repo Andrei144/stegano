@@ -12,7 +12,7 @@ class EncodeModel: CryptoManagerAES() {
         private const val BYTE_SIZE = 8
         private const val NO_OF_COLOR_CHANNELS = 3
         private val PACKAGE_BORDER = ByteArray(2) { _ -> 0x00 }
-        private val MINIMAL_FRAME_SIZE = 8
+        private const val MINIMAL_FRAME_SIZE = 8
     }
 
     private fun getBitFromByte(value: Int, position: Int): Int {

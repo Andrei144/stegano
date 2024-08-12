@@ -82,7 +82,7 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Provide the password associated to the selected photo "
+        android:text="Provide the password associated to the selected photo"
         android:textAlignment="center"
         android:textSize="17sp"
         app:layout_constraintBottom_toBottomOf="parent"
