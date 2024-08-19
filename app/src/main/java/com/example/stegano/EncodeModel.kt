@@ -145,9 +145,11 @@ class EncodeModel: CryptoManagerAES() {
     }
 
     fun encapsulate(message: ByteArray, pass: ByteArray, coverImage: Bitmap): Bitmap{
-        var code = byteArrayOf(pass.size.toByte())
-        val encryptedMessage = super.encrypt(message)
-        code += pass + encryptedMessage
+        val encryptedMessage = super.encrypt(message, pass.decodeToString())
+        val passHash = super.getPassHash(pass.decodeToString())
+
+        var code = byteArrayOf(passHash.size.toByte())
+        code += passHash + encryptedMessage
 
         var packageData = ByteArray(1)
         packageData[0] = code.size.toByte()
@@ -182,14 +184,15 @@ class EncodeModel: CryptoManagerAES() {
 //            throw Exception("Size mismatch, or image is not steganographed")
         }
 
-        val passwordSize = code[0].toInt()
-        val pass = code.sliceArray(1..passwordSize)
-        val encryptedMessage = code.sliceArray(passwordSize + 1..<code.size)
+        val passHashSize = HASH_SIZE
+        val passHash = super.getPassHash(password.decodeToString())
+        val originalPassHash = code.sliceArray(1..passHashSize)
+        val encryptedMessage = code.sliceArray(passHashSize + 1..<code.size)
 
-        if(!pass.contentEquals(password)){
+        if(!originalPassHash.contentEquals(passHash)){
             throw Exception("Incorrect password")
         }
 
-        return super.decrypt(encryptedMessage)
+        return super.decrypt(encryptedMessage, password.decodeToString())
     }
 }
