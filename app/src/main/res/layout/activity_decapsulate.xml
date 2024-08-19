@@ -48,6 +48,7 @@
         app:layout_constraintVertical_bias="0.053"
         tools:srcCompat="@tools:sample/avatars" />
 
+
     <EditText
         android:id="@+id/editTextPasswordDecap"
         android:layout_width="177dp"
@@ -55,12 +56,13 @@
         android:ems="10"
         android:hint="Password"
         android:inputType="textPassword"
+        android:textSize="17sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.102"
+        app:layout_constraintHorizontal_bias="0.068"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageViewDecap"
-        app:layout_constraintVertical_bias="0.101" />
+        app:layout_constraintVertical_bias="0.089" />
 
     <Button
         android:id="@+id/decapMessageBtn"
@@ -71,12 +73,9 @@
         android:text="Decapsulate\nMessage"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.632"
         app:layout_constraintStart_toEndOf="@+id/editTextPasswordDecap"
         app:layout_constraintTop_toBottomOf="@+id/imageViewDecap"
-        app:layout_constraintVertical_bias="0.088" />
-
+        app:layout_constraintVertical_bias="0.09" />
 
     <TextView
         android:id="@+id/textView"

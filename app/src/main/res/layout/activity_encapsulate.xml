@@ -69,11 +69,9 @@
         android:text="Encapsulate\nmessage"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.059"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/encryptionPassword"
         app:layout_constraintTop_toBottomOf="@+id/messageInput"
-        app:layout_constraintVertical_bias="0.053" />
+        app:layout_constraintVertical_bias="0.054" />
 
     <EditText
         android:id="@+id/encryptionPassword"
@@ -83,12 +81,13 @@
         android:hint="Password"
         android:importantForAutofill="no"
         android:inputType="textPassword"
+        android:textSize="17sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.91"
+        app:layout_constraintHorizontal_bias="0.094"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/messageInput"
-        app:layout_constraintVertical_bias="0.052" />
+        app:layout_constraintVertical_bias="0.053" />
 
     <ImageButton
         android:id="@+id/imageButton"

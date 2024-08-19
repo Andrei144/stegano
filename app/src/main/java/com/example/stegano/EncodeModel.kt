@@ -177,9 +177,9 @@ class EncodeModel: CryptoManagerAES() {
         val codeSize = packageData[0].toInt()
         val code = packageData.sliceArray(1..<packageData.size)
 
-        if(code.size != codeSize){
-            Log.w("Size mismatch", "Code size: ${code.size}\t" +
-                    "Code size expected: $codeSize\n" +
+        if(code.size % 256 != codeSize){
+            Log.w("Size mismatch", "Code size mod 256: ${code.size % 256}\t" +
+                    "Code size expected mod 256: $codeSize\n" +
                     "Is also a very small possibility that the image is not steganographed.")
 //            throw Exception("Size mismatch, or image is not steganographed")
         }
