@@ -184,10 +184,9 @@ class EncodeModel: CryptoManagerAES() {
 //            throw Exception("Size mismatch, or image is not steganographed")
         }
 
-        val passHashSize = HASH_SIZE
         val passHash = super.getPassHash(password.decodeToString())
-        val originalPassHash = code.sliceArray(1..passHashSize)
-        val encryptedMessage = code.sliceArray(passHashSize + 1..<code.size)
+        val originalPassHash = code.sliceArray(1..HASH_SIZE)
+        val encryptedMessage = code.sliceArray(HASH_SIZE + 1..<code.size)
 
         if(!originalPassHash.contentEquals(passHash)){
             throw Exception("Incorrect password")

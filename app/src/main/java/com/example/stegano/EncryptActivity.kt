@@ -170,6 +170,8 @@ class EncryptActivity : AppCompatActivity() {
                         saveImage(coverImage!!, this, "Stegano")
                 )
         }
+
+        Toast.makeText(this, "Image was sent", Toast.LENGTH_LONG).show()
     }
 
     fun onClickSaveImageBtn(view: View) {

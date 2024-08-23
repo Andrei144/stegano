@@ -28,7 +28,7 @@ class InfoActivity : AppCompatActivity() {
     private val cryptographyExplain = "\n   Cryptography is focussed on protecting the data by " +
             "applying a set of 2 transformations. The first transformation is called encryption " +
             "and is used to make something unreadable out of data, while the second " +
-            "transformation one is used to recover data from the encrypted data.\n   " +
+            "one is used to recover data from the encrypted data.\n   " +
             "The app is using encryption to add an extra layer of security.\n"
 
     private lateinit var useExplainTextView: TextView
